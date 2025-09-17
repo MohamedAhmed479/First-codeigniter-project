@@ -31,6 +31,8 @@ class Filters extends BaseFilters
         'invalidchars'  => InvalidChars::class,
         'secureheaders' => SecureHeaders::class,
         'cors'          => Cors::class,
+        'api-cors'      => \App\Filters\CorsFilter::class,
+        'token-auth'    => \App\Filters\TokenAuthFilter::class,
         'forcehttps'    => ForceHTTPS::class,
         'pagecache'     => PageCache::class,
         'performance'   => PerformanceMetrics::class,
@@ -72,11 +74,13 @@ class Filters extends BaseFilters
      */
     public array $globals = [
         'before' => [
+            'api-cors',
             // 'honeypot',
             // 'csrf',
             // 'invalidchars',
         ],
         'after' => [
+            'api-cors',
             // 'honeypot',
             // 'secureheaders',
         ],

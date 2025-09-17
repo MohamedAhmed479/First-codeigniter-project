@@ -1,68 +1,294 @@
-# CodeIgniter 4 Application Starter
+# مشروع مدونة CodeIgniter 4
 
-## What is CodeIgniter?
+مشروع تعليمي شامل لتطوير مدونة باستخدام CodeIgniter 4، مصمم خصيصاً للمطورين القادمين من Laravel لتعلم الاختلافات والتشابهات بين الإطارين.
 
-CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.
-More information can be found at the [official site](https://codeigniter.com).
+## 🎯 الهدف من المشروع
 
-This repository holds a composer-installable app starter.
-It has been built from the
-[development repository](https://github.com/codeigniter4/CodeIgniter4).
+هذا المشروع يهدف إلى:
+- تعليم أساسيات CodeIgniter 4 للمطورين المتمرسين في Laravel
+- إظهار الاختلافات العملية بين CodeIgniter و Laravel
+- بناء تطبيق مدونة كامل وقابل للاستخدام
+- تطبيق أفضل الممارسات في كلا الإطارين
 
-More information about the plans for version 4 can be found in [CodeIgniter 4](https://forum.codeigniter.com/forumdisplay.php?fid=28) on the forums.
+## 🚀 الميزات
 
-You can read the [user guide](https://codeigniter.com/user_guide/)
-corresponding to the latest version of the framework.
+### ✅ المميزات المنجزة
+- **نظام المصادقة الكامل**: تسجيل، دخول، خروج
+- **إدارة المقالات**: إنشاء، تعديل، حذف، نشر
+- **تصنيف المقالات**: فئات منظمة
+- **البحث والتصفية**: بحث في المحتوى والعناوين
+- **واجهة مستخدم حديثة**: Bootstrap 5 RTL
+- **حماية CSRF**: حماية من الهجمات
+- **Validation**: التحقق من صحة البيانات
+- **Soft Delete**: حذف آمن للبيانات
+- **Pagination**: تقسيم النتائج
 
-## Installation & updates
+### 🔄 الميزات المخطط لها
+- نظام التعليقات
+- رفع الصور
+- نظام الصلاحيات المتقدم
+- API RESTful
+- اختبارات شاملة
 
-`composer create-project codeigniter4/appstarter` then `composer update` whenever
-there is a new release of the framework.
+## 📋 المتطلبات
 
-When updating, check the release notes to see if there are any changes you might need to apply
-to your `app` folder. The affected files can be copied or merged from
-`vendor/codeigniter4/framework/app`.
+- **PHP**: 8.1 أو أحدث
+- **Composer**: لإدارة التبعيات
+- **قاعدة البيانات**: MySQL 5.7+ أو MariaDB 10.3+
+- **خادم ويب**: Apache أو Nginx (أو PHP Built-in Server للتطوير)
 
-## Setup
+## 🛠️ التثبيت والإعداد
 
-Copy `env` to `.env` and tailor for your app, specifically the baseURL
-and any database settings.
+### 1. تحضير البيئة
 
-## Important Change with index.php
+```bash
+# التأكد من إصدار PHP
+php -v
 
-`index.php` is no longer in the root of the project! It has been moved inside the *public* folder,
-for better security and separation of components.
+# التأكد من تثبيت Composer
+composer --version
 
-This means that you should configure your web server to "point" to your project's *public* folder, and
-not to the project root. A better practice would be to configure a virtual host to point there. A poor practice would be to point your web server to the project root and expect to enter *public/...*, as the rest of your logic and the
-framework are exposed.
+# التأكد من تثبيت Git
+git --version
+```
 
-**Please** read the user guide for a better explanation of how CI4 works!
+### 2. استنساخ المشروع
 
-## Repository Management
+```bash
+# استنساخ المشروع
+git clone <repository-url> codeigniter-blog
+cd codeigniter-blog
 
-We use GitHub issues, in our main repository, to track **BUGS** and to track approved **DEVELOPMENT** work packages.
-We use our [forum](http://forum.codeigniter.com) to provide SUPPORT and to discuss
-FEATURE REQUESTS.
+# تثبيت التبعيات
+composer install
+```
 
-This repository is a "distribution" one, built by our release preparation script.
-Problems with it can be raised on our forum, or as issues in the main repository.
+### 3. إعداد قاعدة البيانات
 
-## Server Requirements
+#### أ. إنشاء قاعدة البيانات
+```sql
+-- في phpMyAdmin أو MySQL CLI
+CREATE DATABASE ci4_blog CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+```
 
-PHP version 8.1 or higher is required, with the following extensions installed:
+أو استخدم ملف `database_setup.sql` المرفق:
+```bash
+# في XAMPP/phpMyAdmin، استورد ملف database_setup.sql
+```
 
-- [intl](http://php.net/manual/en/intl.requirements.php)
-- [mbstring](http://php.net/manual/en/mbstring.installation.php)
+#### ب. إعداد ملف البيئة
+```bash
+# نسخ ملف البيئة
+cp env .env
+```
 
-> [!WARNING]
-> - The end of life date for PHP 7.4 was November 28, 2022.
-> - The end of life date for PHP 8.0 was November 26, 2023.
-> - If you are still using PHP 7.4 or 8.0, you should upgrade immediately.
-> - The end of life date for PHP 8.1 will be December 31, 2025.
+تحرير `.env` وتحديث إعدادات قاعدة البيانات:
+```ini
+# بيئة التطوير
+CI_ENVIRONMENT = development
 
-Additionally, make sure that the following extensions are enabled in your PHP:
+# إعدادات التطبيق
+app.baseURL = 'http://localhost:8080/'
+app.forceGlobalSecureRequests = false
+app.CSPEnabled = true
 
-- json (enabled by default - don't turn it off)
-- [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) if you plan to use MySQL
-- [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
+# إعدادات قاعدة البيانات
+database.default.hostname = localhost
+database.default.database = ci4_blog
+database.default.username = root
+database.default.password = 
+database.default.DBDriver = MySQLi
+database.default.DBPrefix =
+database.default.port = 3306
+
+# مفتاح التشفير (مهم جداً!)
+encryption.key = hex2bin:1a2b3c4d5e6f708192a3b4c5d6e7f80910203040506070809101112131415161
+```
+
+### 4. إنشاء الجداول
+
+```bash
+# تشغيل migrations
+php spark migrate
+
+# ملء قاعدة البيانات ببيانات تجريبية
+php spark db:seed DatabaseSeeder
+```
+
+### 5. تشغيل الخادم
+
+```bash
+# تشغيل خادم التطوير المدمج
+php spark serve
+
+# أو تحديد منفذ مخصص
+php spark serve --port 8080
+```
+
+الآن يمكنك الوصول للتطبيق عبر: `http://localhost:8080`
+
+## 🔐 بيانات الدخول التجريبية
+
+بعد تشغيل Seeders، يمكنك استخدام:
+
+| المستخدم | البريد الإلكتروني | كلمة المرور | الدور |
+|---------|-----------------|------------|-------|
+| أحمد محمد | admin@example.com | password123 | إداري |
+| فاطمة علي | writer1@example.com | password123 | كاتب |
+| محمد عبدالله | writer2@example.com | password123 | كاتب |
+
+## 📁 هيكل المشروع
+
+```
+codeigniter-blog/
+├── app/
+│   ├── Controllers/          # Controllers (مشابه لـ Laravel)
+│   │   ├── Auth.php         # المصادقة
+│   │   ├── Blog.php         # المدونة العامة
+│   │   └── Admin.php        # لوحة الإدارة
+│   ├── Models/              # Models (مختلف عن Eloquent)
+│   │   ├── User.php
+│   │   ├── Post.php
+│   │   └── Category.php
+│   ├── Views/               # Views (مشابه لـ Blade)
+│   │   ├── layouts/
+│   │   ├── auth/
+│   │   ├── blog/
+│   │   └── admin/
+│   ├── Database/
+│   │   ├── Migrations/      # Migrations (مشابه لـ Laravel)
+│   │   └── Seeds/           # Seeders
+│   └── Config/
+│       ├── Routes.php       # التوجيه (مختلف عن web.php)
+│       └── Database.php     # إعدادات قاعدة البيانات
+├── public/                  # الملفات العامة
+├── writable/               # ملفات الكتابة (logs, cache, etc.)
+└── vendor/                 # تبعيات Composer
+```
+
+## 🔄 مقارنة مع Laravel
+
+### التشابهات
+- **MVC Pattern**: نفس النمط المعماري
+- **Migrations**: نفس المفهوم لإدارة قاعدة البيانات
+- **Routing**: مفهوم مشابه للتوجيه
+- **Validation**: التحقق من صحة البيانات
+
+### الاختلافات الرئيسية
+
+| الجانب | Laravel | CodeIgniter 4 |
+|-------|---------|---------------|
+| **ORM** | Eloquent (Active Record) | Model (Query Builder) |
+| **DI** | حقن تلقائي للتبعيات | تحميل يدوي |
+| **Views** | Blade Templates | PHP العادي |
+| **Config** | ملفات .env متقدمة | ملفات PHP + .env |
+| **Middleware** | Middleware | Filters |
+| **Commands** | Artisan | Spark |
+
+### أمثلة عملية
+
+#### 1. تعريف Route
+```php
+// Laravel
+Route::get('/posts/{slug}', [PostController::class, 'show']);
+
+// CodeIgniter 4
+$routes->get('posts/(:segment)', 'Blog::show/$1');
+```
+
+#### 2. Model Query
+```php
+// Laravel Eloquent
+$posts = Post::where('status', 'published')
+             ->with('user', 'category')
+             ->paginate(10);
+
+// CodeIgniter 4
+$posts = $this->postModel
+              ->select('posts.*, users.name, categories.name as category')
+              ->join('users', 'users.id = posts.user_id')
+              ->join('categories', 'categories.id = posts.category_id')
+              ->where('status', 'published')
+              ->paginate(10);
+```
+
+#### 3. View Rendering
+```php
+// Laravel
+return view('posts.index', compact('posts'));
+
+// CodeIgniter 4
+return view('posts/index', ['posts' => $posts]);
+```
+
+## 🧪 الاختبارات
+
+```bash
+# تشغيل جميع الاختبارات
+php spark test
+
+# تشغيل اختبارات محددة
+php spark test --group authentication
+```
+
+## 🔧 أوامر مفيدة
+
+```bash
+# إنشاء controller جديد
+php spark make:controller PostController
+
+# إنشاء model جديد
+php spark make:model Post
+
+# إنشاء migration جديد
+php spark make:migration CreatePostsTable
+
+# إنشاء seeder جديد
+php spark make:seeder PostSeeder
+
+# مسح الـ cache
+php spark cache:clear
+
+# عرض قائمة Routes
+php spark routes
+```
+
+## 📚 الموارد التعليمية
+
+### CodeIgniter 4
+- [الدليل الرسمي](https://codeigniter.com/user_guide/)
+- [CodeIgniter 4 API](https://codeigniter4.github.io/api/)
+
+### مقارنات مفيدة
+- [Laravel vs CodeIgniter](https://blog.back4app.com/laravel-vs-codeigniter/)
+- [Migration Guide](https://codeigniter.com/user_guide/installation/upgrade_4xx.html)
+
+## 🤝 المساهمة
+
+1. Fork المشروع
+2. إنشاء feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit التغييرات (`git commit -m 'Add some AmazingFeature'`)
+4. Push للـ branch (`git push origin feature/AmazingFeature`)
+5. فتح Pull Request
+
+## 📝 الترخيص
+
+هذا المشروع مرخص تحت رخصة MIT - راجع ملف [LICENSE](LICENSE) للتفاصيل.
+
+## 🐛 الإبلاغ عن المشاكل
+
+إذا واجهت أي مشاكل، يرجى:
+1. التأكد من المتطلبات
+2. مراجعة هذا الدليل
+3. البحث في Issues الموجودة
+4. إنشاء Issue جديد مع التفاصيل الكاملة
+
+## 📞 الدعم
+
+- **التوثيق**: راجع هذا الملف أولاً
+- **Issues**: للمشاكل التقنية
+- **Discussions**: للأسئلة العامة
+
+---
+
+**ملاحظة**: هذا مشروع تعليمي مصمم لإظهار الاختلافات بين CodeIgniter 4 و Laravel. للاستخدام في بيئة الإنتاج، يرجى مراجعة إعدادات الأمان والأداء.
