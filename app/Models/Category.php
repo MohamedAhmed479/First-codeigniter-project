@@ -12,7 +12,7 @@ class Category extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = true;  // تفعيل Soft Delete
     protected $protectFields    = true;
-    protected $allowedFields    = ['name', 'slug', 'description', 'is_active'];
+    protected $allowedFields    = ['id', 'name', 'slug', 'description', 'is_active'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
@@ -33,6 +33,7 @@ class Category extends Model
 
     // Validation
     protected $validationRules = [
+        'id' => 'permit_empty|is_natural_no_zero',
         'name' => 'required|min_length[2]|max_length[100]|is_unique[categories.name,id,{id}]',
         'slug' => 'required|min_length[2]|max_length[100]|is_unique[categories.slug,id,{id}]',
         'description' => 'permit_empty|max_length[500]',

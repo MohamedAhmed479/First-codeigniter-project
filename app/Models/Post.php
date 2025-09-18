@@ -36,7 +36,7 @@ class Post extends Model
     // Validation
     protected $validationRules = [
         'title'       => 'required|min_length[5]|max_length[255]',
-        'slug'        => 'required|min_length[5]|max_length[255]|is_unique[posts.slug,id,{id}]',
+        'slug'        => 'permit_empty|min_length[5]|max_length[255]|is_unique[posts.slug,id,{id}]',
         'content'     => 'required|min_length[10]',
         'excerpt'     => 'permit_empty|max_length[500]',
         'status'      => 'required|in_list[draft,published,archived]',

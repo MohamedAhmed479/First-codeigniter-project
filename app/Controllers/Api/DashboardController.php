@@ -159,7 +159,14 @@ class DashboardController extends BaseApiController
             return $user; // Return error response
         }
 
-        $limit = $this->request->getGet('limit') ?? 20;
+        $limitParam = $this->request->getGet('limit');
+        $limit = is_null($limitParam) ? 20 : (int) $limitParam;
+        if ($limit <= 0) {
+            $limit = 20;
+        }
+        if ($limit > 100) {
+            $limit = 100;
+        }
 
         // أحدث الأنشطة (مقالات جديدة، تحديثات، إلخ)
         $activities = [];

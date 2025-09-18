@@ -67,6 +67,7 @@ class CreateUsersTable extends Migration
         $this->forge->addPrimaryKey('id');
         
         // إنشاء فهارس للبحث السريع
+        // ملحوظه: مجرد عمل العمود علي انه يونيك فانه يتم عمل ال index تلقائيا
         // $this->forge->addKey('username');
         
         // إنشاء الجدول

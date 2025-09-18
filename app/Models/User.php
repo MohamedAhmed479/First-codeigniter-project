@@ -13,7 +13,7 @@ class User extends Model
     protected $useSoftDeletes   = true;  // تفعيل Soft Delete
     protected $protectFields    = true;
     protected $allowedFields    = [
-        'username', 'email', 'password_hash', 'first_name', 'last_name', 'is_active'
+        'id', 'username', 'email', 'password_hash', 'first_name', 'last_name', 'is_active'
     ];
 
     protected bool $allowEmptyInserts = false;
@@ -40,9 +40,10 @@ class User extends Model
      * هذا مختلف عن Laravel حيث نستخدم FormRequest أو نحدد القواعد في Controller
      */
     protected $validationRules = [
+        'id' => 'permit_empty|is_natural_no_zero',
         'username' => 'required|min_length[3]|max_length[100]|is_unique[users.username,id,{id}]',
         'email'    => 'required|valid_email|is_unique[users.email,id,{id}]',
-        'password_hash' => 'required|min_length[8]',
+        'password_hash' => 'permit_empty|min_length[8]',
         'first_name' => 'permit_empty|max_length[100]',
         'last_name'  => 'permit_empty|max_length[100]',
         'is_active'  => 'permit_empty|in_list[0,1]',
@@ -61,7 +62,6 @@ class User extends Model
             'is_unique'   => 'البريد الإلكتروني موجود مسبقاً',
         ],
         'password_hash' => [
-            'required'   => 'كلمة المرور مطلوبة',
             'min_length' => 'كلمة المرور يجب أن تكون 8 أحرف على الأقل',
         ],
     ];

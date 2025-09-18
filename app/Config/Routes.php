@@ -41,8 +41,7 @@ $routes->group('api', ['namespace' => 'App\Controllers\Api'], function($routes) 
         $routes->get('/', 'PostsController::index');
         $routes->get('category/(:segment)', 'PostsController::byCategory/$1');
         $routes->get('author/(:segment)', 'PostsController::byAuthor/$1');
-        $routes->get('(:segment)', 'PostsController::show/$1');
-        
+
         // Protected routes (require token)
         $routes->group('', ['filter' => 'token-auth'], function($routes) {
             $routes->get('my-posts', 'PostsController::myPosts');
@@ -50,6 +49,9 @@ $routes->group('api', ['namespace' => 'App\Controllers\Api'], function($routes) 
             $routes->put('(:num)', 'PostsController::update/$1');
             $routes->delete('(:num)', 'PostsController::delete/$1');
         });
+
+        // Catch-all for a single post (must come AFTER more specific routes)
+        $routes->get('(:segment)', 'PostsController::show/$1');
     });
 
     // Categories Routes
